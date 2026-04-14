@@ -1,7 +1,7 @@
 {
   "name": "moon-lead-finder",
-  "version": "1.0.0",
-  "description": "Apify actor to discover and score B2B leads for Moon Shared Living.",
+  "version": "1.1.0",
+  "description": "Apify actor to find private owner rental leads for Moon Shared Living in Madrid and Barcelona.",
   "type": "module",
   "scripts": {
     "start": "node src/main.js"
