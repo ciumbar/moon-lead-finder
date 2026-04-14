@@ -1,72 +1,64 @@
+import { isValidSpanishPhone, normalizeSpanishPhone } from './utils.js';
+
 export function scoreLead(lead) {
   let score = 0;
   const reasons = [];
-  const text = `${lead.aboutSnippet || ''} ${lead.leadType || ''}`.toLowerCase();
+  const text = `${lead.aboutSnippet || ''} ${lead.listingTitle || ''}`.toLowerCase();
 
-  const strongTerms = [
-    'coliving',
-    'student housing',
-    'residencia estudiantes',
-    'alquiler habitaciones',
-    'shared living',
-    'relocation',
-    'young professionals',
-    'students',
-    'flexible stay',
-  ];
-
-  const supportTerms = [
-    'community',
-    'managed',
-    'rooms',
-    'habitaciones',
-    'furnished',
-    'professionals',
-    'students',
-    'medium-term',
-  ];
-
-  if (lead.emails?.length) {
-    score += 15;
+  if (lead.email) {
+    score += 20;
     reasons.push('Tiene email público');
   }
-  if (lead.phones?.length) {
+
+  if (lead.phoneRaw) {
+    const normalized = normalizeSpanishPhone(lead.phoneRaw);
+    if (normalized && isValidSpanishPhone(normalized)) {
+      lead.phoneNormalized = normalized;
+      lead.isSpanishPhoneValid = true;
+      score += 25;
+      reasons.push('Teléfono español válido');
+    } else {
+      lead.phoneNormalized = null;
+      lead.isSpanishPhoneValid = false;
+    }
+  } else {
+    lead.phoneNormalized = null;
+    lead.isSpanishPhoneValid = false;
+  }
+
+  if (lead.ownerLikely) {
+    score += 25;
+    reasons.push('Parece particular');
+  }
+
+  if (lead.agencyLikely) {
+    score -= 40;
+    reasons.push('Parece agencia');
+  }
+
+  if (lead.propertyType === 'room') {
+    score += 10;
+    reasons.push('Es habitación');
+  }
+
+  if (lead.propertyType === 'flat') {
     score += 8;
-    reasons.push('Tiene teléfono público');
+    reasons.push('Es piso');
   }
-  if (lead.linkedinUrl) {
-    score += 5;
-    reasons.push('Tiene LinkedIn');
-  }
-  if (lead.contactPage) {
-    score += 5;
-    reasons.push('Tiene página de contacto');
-  }
+
   if (lead.city) {
     score += 8;
-    reasons.push(`Opera o menciona ${lead.city}`);
+    reasons.push(`Zona objetivo: ${lead.city}`);
   }
 
-  for (const term of strongTerms) {
-    if (text.includes(term)) {
-      score += 10;
-      reasons.push(`Match fuerte: ${term}`);
-    }
+  if (text.includes('madrid') || text.includes('barcelona')) {
+    score += 6;
   }
 
-  for (const term of supportTerms) {
-    if (text.includes(term)) score += 3;
-  }
-
-  if (lead.leadType && lead.leadType !== 'other') {
-    score += 10;
-    reasons.push(`Tipo detectado: ${lead.leadType}`);
-  }
-
-  score = Math.min(score, 100);
+  score = Math.max(0, Math.min(score, 100));
 
   return {
-    fitScore: score,
-    whyFit: [...new Set(reasons)].slice(0, 6).join(' | '),
+    confidenceScore: score,
+    whyQualified: [...new Set(reasons)].slice(0, 6).join(' | '),
   };
 }

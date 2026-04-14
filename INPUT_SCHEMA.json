@@ -1,57 +1,62 @@
 {
-  "title": "Moon Lead Finder Input",
-  "description": "Input schema for the Moon Lead Finder Apify actor.",
+  "title": "Moon Owner Leads ES Input",
+  "description": "Busca anuncios públicos de habitaciones y pisos de particulares en Madrid y Barcelona.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
-    "cities": {
-      "title": "Cities",
-      "description": "List of target cities to search for leads.",
+    "regions": {
+      "title": "Regions",
+      "description": "Ciudades o zonas objetivo.",
       "type": "array",
       "editor": "stringList",
-      "default": ["Madrid", "Barcelona", "Valencia"]
+      "default": ["Madrid", "Barcelona", "Comunidad de Madrid", "Área Metropolitana de Barcelona"]
     },
-    "countries": {
-      "title": "Countries",
-      "description": "List of countries corresponding to the target cities.",
+    "propertyTypes": {
+      "title": "Property types",
+      "description": "Tipos de inmueble a buscar.",
       "type": "array",
       "editor": "stringList",
-      "default": ["Spain"]
+      "default": ["room", "flat"]
     },
-    "keywords": {
-      "title": "Keywords",
-      "description": "Search terms used to discover relevant operators and companies.",
-      "type": "array",
-      "editor": "stringList",
-      "default": [
-        "coliving",
-        "alquiler habitaciones",
-        "residencia estudiantes",
-        "shared living",
-        "relocation housing"
-      ]
+    "ownerOnly": {
+      "title": "Owner only",
+      "description": "Intentar guardar solo leads que parezcan particulares.",
+      "type": "boolean",
+      "default": true
+    },
+    "requireEmailOrPhone": {
+      "title": "Require email or phone",
+      "description": "Guardar solo resultados con email o teléfono.",
+      "type": "boolean",
+      "default": true
+    },
+    "requireSpanishPhone": {
+      "title": "Require Spanish phone",
+      "description": "Validar teléfonos con formato español cuando existan.",
+      "type": "boolean",
+      "default": true
     },
     "maxResultsPerQuery": {
       "title": "Max results per query",
-      "description": "Maximum number of candidate search results to inspect per query.",
+      "description": "Número máximo de resultados a revisar por query de búsqueda.",
       "type": "integer",
       "minimum": 1,
-      "default": 10
-    },
-    "allowedDomains": {
-      "title": "Allowed domains",
-      "description": "Optional allowlist of domains to restrict crawling.",
-      "type": "array",
-      "editor": "stringList",
-      "default": []
+      "default": 20
     },
     "maxPagesPerSite": {
       "title": "Max pages per site",
-      "description": "Maximum number of internal pages to visit for each discovered website.",
+      "description": "Máximo de páginas internas a visitar por dominio.",
       "type": "integer",
       "minimum": 1,
       "default": 3
+    },
+    "allowedDomains": {
+      "title": "Allowed domains",
+      "description": "Lista opcional de dominios permitidos para restringir el rastreo.",
+      "type": "array",
+      "editor": "stringList",
+      "default": []
     }
   },
-  "required": ["cities", "keywords"]
+  "required": ["regions"]
 }
