@@ -5,8 +5,10 @@ export function scoreLead(lead) {
   const reasons = [];
   const text = `${lead.aboutSnippet || ''} ${lead.listingTitle || ''}`.toLowerCase();
 
+  lead.hasContact = Boolean(lead.email || lead.phoneRaw);
+
   if (lead.email) {
-    score += 20;
+    score += 12;
     reasons.push('Tiene email público');
   }
 
@@ -15,24 +17,26 @@ export function scoreLead(lead) {
     if (normalized && isValidSpanishPhone(normalized)) {
       lead.phoneNormalized = normalized;
       lead.isSpanishPhoneValid = true;
-      score += 25;
+      score += 18;
       reasons.push('Teléfono español válido');
     } else {
       lead.phoneNormalized = null;
       lead.isSpanishPhoneValid = false;
+      reasons.push('Teléfono no validado');
     }
   } else {
     lead.phoneNormalized = null;
     lead.isSpanishPhoneValid = false;
+    reasons.push('Sin teléfono público');
   }
 
   if (lead.ownerLikely) {
-    score += 25;
+    score += 20;
     reasons.push('Parece particular');
   }
 
   if (lead.agencyLikely) {
-    score -= 40;
+    score -= 18;
     reasons.push('Parece agencia');
   }
 
@@ -52,7 +56,7 @@ export function scoreLead(lead) {
   }
 
   if (text.includes('madrid') || text.includes('barcelona')) {
-    score += 6;
+    score += 4;
   }
 
   score = Math.max(0, Math.min(score, 100));
