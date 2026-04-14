@@ -1,6 +1,6 @@
 {
   "title": "Moon Owner Leads ES Input",
-  "description": "Busca anuncios públicos de habitaciones y pisos de particulares en Madrid y Barcelona.",
+  "description": "Modo amplio para descubrir anuncios y páginas de particulares con habitaciones o pisos en Madrid y Barcelona, evitando dominios bloqueados como Idealista.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
@@ -20,35 +20,35 @@
     },
     "ownerOnly": {
       "title": "Owner only",
-      "description": "Intentar guardar solo leads que parezcan particulares.",
+      "description": "Si es true, prioriza particulares, pero en modo amplio se recomienda false.",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "requireEmailOrPhone": {
       "title": "Require email or phone",
-      "description": "Guardar solo resultados con email o teléfono.",
+      "description": "Si es true, guarda solo páginas con email o teléfono público.",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "requireSpanishPhone": {
       "title": "Require Spanish phone",
-      "description": "Validar teléfonos con formato español cuando existan.",
+      "description": "Si es true, exige teléfono español válido cuando exista teléfono.",
       "type": "boolean",
-      "default": true
+      "default": false
     },
     "maxResultsPerQuery": {
       "title": "Max results per query",
-      "description": "Número máximo de resultados a revisar por query de búsqueda.",
+      "description": "Número máximo de resultados a revisar por query.",
       "type": "integer",
       "minimum": 1,
-      "default": 20
+      "default": 50
     },
     "maxPagesPerSite": {
       "title": "Max pages per site",
       "description": "Máximo de páginas internas a visitar por dominio.",
       "type": "integer",
       "minimum": 1,
-      "default": 3
+      "default": 5
     },
     "allowedDomains": {
       "title": "Allowed domains",
@@ -56,6 +56,13 @@
       "type": "array",
       "editor": "stringList",
       "default": []
+    },
+    "blockedDomains": {
+      "title": "Blocked domains",
+      "description": "Dominios a ignorar por bloqueo o baja utilidad.",
+      "type": "array",
+      "editor": "stringList",
+      "default": ["idealista.com"]
     }
   },
   "required": ["regions"]
