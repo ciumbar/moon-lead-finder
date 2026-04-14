@@ -1,22 +1,26 @@
 {
   "title": "Moon Lead Finder Input",
+  "description": "Input schema for the Moon Lead Finder Apify actor.",
   "type": "object",
   "schemaVersion": 1,
   "properties": {
     "cities": {
       "title": "Cities",
+      "description": "List of target cities to search for leads.",
       "type": "array",
       "editor": "stringList",
       "default": ["Madrid", "Barcelona", "Valencia"]
     },
     "countries": {
       "title": "Countries",
+      "description": "List of countries corresponding to the target cities.",
       "type": "array",
       "editor": "stringList",
       "default": ["Spain"]
     },
     "keywords": {
       "title": "Keywords",
+      "description": "Search terms used to discover relevant operators and companies.",
       "type": "array",
       "editor": "stringList",
       "default": [
@@ -29,18 +33,21 @@
     },
     "maxResultsPerQuery": {
       "title": "Max results per query",
+      "description": "Maximum number of candidate search results to inspect per query.",
       "type": "integer",
       "minimum": 1,
       "default": 10
     },
     "allowedDomains": {
       "title": "Allowed domains",
+      "description": "Optional allowlist of domains to restrict crawling.",
       "type": "array",
       "editor": "stringList",
       "default": []
     },
     "maxPagesPerSite": {
       "title": "Max pages per site",
+      "description": "Maximum number of internal pages to visit for each discovered website.",
       "type": "integer",
       "minimum": 1,
       "default": 3
