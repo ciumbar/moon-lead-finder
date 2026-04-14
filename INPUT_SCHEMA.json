@@ -1,0 +1,50 @@
+{
+  "title": "Moon Lead Finder Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "cities": {
+      "title": "Cities",
+      "type": "array",
+      "editor": "stringList",
+      "default": ["Madrid", "Barcelona", "Valencia"]
+    },
+    "countries": {
+      "title": "Countries",
+      "type": "array",
+      "editor": "stringList",
+      "default": ["Spain"]
+    },
+    "keywords": {
+      "title": "Keywords",
+      "type": "array",
+      "editor": "stringList",
+      "default": [
+        "coliving",
+        "alquiler habitaciones",
+        "residencia estudiantes",
+        "shared living",
+        "relocation housing"
+      ]
+    },
+    "maxResultsPerQuery": {
+      "title": "Max results per query",
+      "type": "integer",
+      "minimum": 1,
+      "default": 10
+    },
+    "allowedDomains": {
+      "title": "Allowed domains",
+      "type": "array",
+      "editor": "stringList",
+      "default": []
+    },
+    "maxPagesPerSite": {
+      "title": "Max pages per site",
+      "type": "integer",
+      "minimum": 1,
+      "default": 3
+    }
+  },
+  "required": ["cities", "keywords"]
+}

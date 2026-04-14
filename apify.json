@@ -1,0 +1,8 @@
+{
+  "actorSpecification": 1,
+  "name": "moon-lead-finder",
+  "title": "Moon Lead Finder",
+  "description": "Finds and scores B2B leads relevant to Moon Shared Living.",
+  "version": "0.1",
+  "dockerfile": "./Dockerfile"
+}
